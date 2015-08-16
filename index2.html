@@ -418,6 +418,9 @@ void main() {
 
 <body onload="">
     <button id="cubo" >Cubo</button>
+    <button id="rotar" >rotar</button>
+    <button id="cancelar rotar" onclick="cancelarAnimation()" >Cancelar</button>
+    
         <button id="esfera">esfera</button>
 <canvas id="c">
     If you're seeing this your web browser doesn't support the &lt;canvas>&gt; element. Ouch!
@@ -427,9 +430,19 @@ void main() {
 <script type="text/javascript" src="js/main.js"></script>
 
 <script >
+
+window.onload=iniciar();
     $("#cubo").click(function(){
-        
+       alert("cubo"); 
 
     });
+
+$("#rotar").click(function(){
+       rotarAlrededor(); 
+
+    });
+
+
+
 </script>
 </html>
