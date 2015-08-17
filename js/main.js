@@ -153,6 +153,7 @@ var requestId;
 
   }
 */
+drawPlano(time);
 drawEsfera(time);
 
       twgl.drawObjectList(gl, drawObjects);
@@ -192,7 +193,7 @@ function iniciar(){
      camera = m4.identity();
      view = m4.identity();
      viewProjection = m4.identity();
-
+/*
     textEsfera = twgl.createTexture(gl, {
       min: gl.NEAREST,
       mag: gl.NEAREST,
@@ -203,7 +204,7 @@ function iniciar(){
         255, 255, 255, 255,
       ],
     });
-
+*/
     var numObjects = shapes.length;
     baseHue = rand(0, 360); //color que se usara
     /*posiciones iniciales*/
@@ -247,6 +248,7 @@ function iniciar(){
 }
 */
 settingsEsfera();
+settingsPlano();
     requestAnimationFrame(render);
     //render();
 
@@ -312,9 +314,12 @@ if(requestId){
 
 function settingsEsfera(){
 
-
  var initial_position=[-2,1,0];//esfera
-
+    textEsfera = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/baseball.jpg",
+    });
 var uniforms = {
         u_lightWorldPos: lightWorldPosition,
         u_lightColor: lightColor,
@@ -340,8 +345,44 @@ var uniforms = {
   
 }
 
+
+function settingsPlano(){
+
+ var initial_position=[0,0,0];//esfera
+    textEsfera = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/ajedrez.jpg",
+    });
+var uniforms = {
+        u_lightWorldPos: lightWorldPosition,
+        u_lightColor: lightColor,
+        u_diffuseMult: chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl(),
+        u_specular: [1, 1, 1, 1],
+        u_shininess: 50,
+        u_specularFactor: 1,
+        u_diffuse: textEsfera,
+        u_viewInverse: camera,
+        u_world: m4.identity(),
+        u_worldInverseTranspose: m4.identity(),
+        u_worldViewProjection: m4.identity(),
+      };
+
+
+     objects[0]={
+         translation: initial_position,
+        ySpeed: rand(0.1, 0.3),
+        zSpeed: rand(0.1, 0.3),
+        uniforms: uniforms,
+      };
+
+  
+}
+
+
 function drawEsfera(time){
   
+
 uniforms=objects[3].uniforms;
    drawObjects[3]={
         programInfo: programInfo,
@@ -355,6 +396,32 @@ uniforms=objects[3].uniforms;
         var world = uni.u_world;
         m4.identity(world);
         m4.rotateY(world, time * obj.ySpeed, world);
+        //m4.rotateZ(world, time * obj.zSpeed, world);
+        m4.translate(world, obj.translation, world);
+        //m4.rotateX(world, time, world);
+      //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
+        m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
+   
+   
+   }
+
+
+function drawPlano(time){
+  
+
+uniforms=objects[0].uniforms;
+   drawObjects[0]={
+        programInfo: programInfo,
+        bufferInfo: shapes[0],
+        uniforms: uniforms,
+      };
+
+        var obj=objects[0];
+
+        var uni = obj.uniforms;
+        var world = uni.u_world;
+        m4.identity(world);
+        //m4.rotateY(world, time * obj.ySpeed, world);
         //m4.rotateZ(world, time * obj.zSpeed, world);
         m4.translate(world, obj.translation, world);
         //m4.rotateX(world, time, world);
