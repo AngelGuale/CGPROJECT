@@ -177,7 +177,7 @@ function iniciar(){
     programInfo = twgl.createProgramInfo(gl, ["vs", "fs"]);
 
     shapes = [
-      twgl.primitives.createPlaneBufferInfo(gl, 20, 20, 100, 100), //width, height, subdivision
+      twgl.primitives.createPlaneBufferInfo(gl, 30, 30, 10, 10), //width, height, subdivision
       twgl.primitives.createCylinderBufferInfo(gl, 0.3, 20, 24, 2),
       twgl.primitives.createCubeBufferInfo(gl, 2),
       twgl.primitives.createSphereBufferInfo(gl, 1, 24, 12),
@@ -320,10 +320,14 @@ function settingsEsfera(){
       mag: gl.NEAREST,
       src: "textura/baseball.jpg",
     });
+    console.log(chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl());
+
 var uniforms = {
         u_lightWorldPos: lightWorldPosition,
         u_lightColor: lightColor,
-        u_diffuseMult: chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl(),
+
+     //   u_diffuseMult: chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl(),
+        u_diffuseMult: [1,1,1,1],
         u_specular: [1, 1, 1, 1],
         u_shininess: 50,
         u_specularFactor: 1,
@@ -357,7 +361,7 @@ function settingsPlano(){
 var uniforms = {
         u_lightWorldPos: lightWorldPosition,
         u_lightColor: lightColor,
-        u_diffuseMult: chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl(),
+       u_diffuseMult: [1,1,1,1],
         u_specular: [1, 1, 1, 1],
         u_shininess: 50,
         u_specularFactor: 1,
