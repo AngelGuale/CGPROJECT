@@ -13,6 +13,8 @@ var textEsfera;
     var drawObjects = [];
 var requestId;
 
+    var positions=[];
+
 /*
  "use strict";
     twgl.setAttributePrefix("a_");
@@ -155,7 +157,9 @@ var requestId;
 */
 drawPlano(time);
 drawEsfera(time);
-
+drawCubo();
+drawFiguraPorIndice(time, 1);
+drawFiguraPorIndice(time, 4);
       twgl.drawObjectList(gl, drawObjects);
   
       
@@ -208,12 +212,11 @@ function iniciar(){
     var numObjects = shapes.length;
     baseHue = rand(0, 360); //color que se usara
     /*posiciones iniciales*/
-    var initial_positions=[];
-    initial_positions[0]=[0,0,0];//plano
-    initial_positions[1]=[0,0,0];//cilindro
-    initial_positions[2]=[2,1,1];//cubo
-    initial_positions[3]=[-2,1,0];//esfera
-    initial_positions[4]=[3,2,-1];//torus
+    positions[0]=[0,0,0];//plano
+    positions[1]=[0,0,0];//cilindro
+    positions[2]=[2,1,1];//cubo
+    positions[3]=[-2,1,0];//esfera
+    positions[4]=[3,2,-1];//torus
 
 /*
 
@@ -249,6 +252,9 @@ function iniciar(){
 */
 settingsEsfera();
 settingsPlano();
+settingsCubo();
+settingsFiguraPorIndice(1);
+settingsFiguraPorIndice(4);
     requestAnimationFrame(render);
     //render();
 
@@ -384,6 +390,75 @@ var uniforms = {
 }
 
 
+
+
+function settingsCubo(){
+
+ var initial_position=[0,0,0];//esfera
+    textEsfera = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/ajedrez.jpg",
+    });
+var uniforms = {
+        u_lightWorldPos: lightWorldPosition,
+        u_lightColor: lightColor,
+       u_diffuseMult: [1,1,1,1],
+        u_specular: [1, 1, 1, 1],
+        u_shininess: 50,
+        u_specularFactor: 1,
+        u_diffuse: textEsfera,
+        u_viewInverse: camera,
+        u_world: m4.identity(),
+        u_worldInverseTranspose: m4.identity(),
+        u_worldViewProjection: m4.identity(),
+      };
+
+
+     objects[2]={
+         translation: initial_position,
+        ySpeed: rand(0.1, 0.3),
+        zSpeed: rand(0.1, 0.3),
+        uniforms: uniforms,
+      };
+
+  
+}
+
+
+function settingsFiguraPorIndice(i){
+
+ initial_position=positions[i];//esfera
+    textEsfera = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/ajedrez.jpg",
+    });
+var uniforms = {
+        u_lightWorldPos: lightWorldPosition,
+        u_lightColor: lightColor,
+       u_diffuseMult: [1,1,1,1],
+        u_specular: [1, 1, 1, 1],
+        u_shininess: 50,
+        u_specularFactor: 1,
+        u_diffuse: textEsfera,
+        u_viewInverse: camera,
+        u_world: m4.identity(),
+        u_worldInverseTranspose: m4.identity(),
+        u_worldViewProjection: m4.identity(),
+      };
+
+
+     objects[i]={
+         translation: initial_position,
+        ySpeed: rand(0.1, 0.3),
+        zSpeed: rand(0.1, 0.3),
+        uniforms: uniforms,
+      };
+
+  
+}
+
 function drawEsfera(time){
   
 
@@ -426,6 +501,58 @@ uniforms=objects[0].uniforms;
         var world = uni.u_world;
         m4.identity(world);
         //m4.rotateY(world, time * obj.ySpeed, world);
+        //m4.rotateZ(world, time * obj.zSpeed, world);
+        m4.translate(world, obj.translation, world);
+        //m4.rotateX(world, time, world);
+      //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
+        m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
+   
+   
+   }
+
+
+function drawCubo(time){
+  
+
+uniforms=objects[2].uniforms;
+   drawObjects[2]={
+        programInfo: programInfo,
+        bufferInfo: shapes[2],
+        uniforms: uniforms,
+      };
+
+        var obj=objects[2];
+
+        var uni = obj.uniforms;
+        var world = uni.u_world;
+        m4.identity(world);
+        //m4.rotateY(world, time * obj.ySpeed, world);
+        //m4.rotateZ(world, time * obj.zSpeed, world);
+        m4.translate(world, obj.translation, world);
+        //m4.rotateX(world, time, world);
+      //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
+        m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
+   
+   
+   }
+
+
+function drawFiguraPorIndice(time,i){
+  
+
+uniforms=objects[i].uniforms;
+   drawObjects[i]={
+        programInfo: programInfo,
+        bufferInfo: shapes[i],
+        uniforms: uniforms,
+      };
+
+        var obj=objects[i];
+
+        var uni = obj.uniforms;
+        var world = uni.u_world;
+        m4.identity(world);
+        m4.rotateY(world, time * obj.ySpeed, world);
         //m4.rotateZ(world, time * obj.zSpeed, world);
         m4.translate(world, obj.translation, world);
         //m4.rotateX(world, time, world);
