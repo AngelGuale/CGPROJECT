@@ -39,9 +39,12 @@ var positions=[];
       m4.inverse(camera, view);
       m4.multiply(view, projection, viewProjection);
         drawPlano(time);
-        drawEsfera(time);
-        drawCubo();
+    //    drawEsfera(time);
+      //  drawCubo();
         drawFiguraPorIndice(time, 1);
+        drawFiguraPorIndice(time, 2);
+        drawFiguraPorIndice(time, 3);
+      
         drawFiguraPorIndice(time, 4);
 
 
@@ -129,11 +132,15 @@ function iniciar(){
 
 }
 */
-settingsEsfera();
-settingsPlano();
-settingsCubo();
-settingsFiguraPorIndice(1);
-settingsFiguraPorIndice(4);
+  //settingsEsfera();
+  //settingsPlano();
+  //settingsCubo();
+  settingsFiguraPorIndice(0);
+  settingsFiguraPorIndice(1);
+  settingsFiguraPorIndice(2);
+  settingsFiguraPorIndice(3);
+  
+  settingsFiguraPorIndice(4);
     requestAnimationFrame(render);
     //render();
 
@@ -312,7 +319,7 @@ uniforms=objects[3].uniforms;
         //m4.rotateZ(world, time * obj.zSpeed, world);
         m4.translate(world, obj.translation, world);
         //m4.rotateX(world, time, world);
-      //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
+        m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
         m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
    
    
@@ -382,16 +389,25 @@ uniforms=objects[i].uniforms;
       };
 
         var obj=objects[i];
-
         var uni = obj.uniforms;
         var world = uni.u_world;
         m4.identity(world);
-        m4.rotateY(world, time * obj.ySpeed, world);
+        //m4.rotateY(world, time * obj.ySpeed, world);
         //m4.rotateZ(world, time * obj.zSpeed, world);
+        //console.log("aqui");
+      //          console.log(i);
+        //console.log(obj.translation);
         m4.translate(world, obj.translation, world);
         //m4.rotateX(world, time, world);
-      //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
+        //m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
         m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
    
    
    }
+
+function trasladarFigura(i, x){
+
+        obj=objects[i];
+        obj.translation=[x,obj.translation[1],obj.translation[2]];   
+}
+
