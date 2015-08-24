@@ -405,9 +405,13 @@ uniforms=objects[i].uniforms;
    
    }
 
-function trasladarFigura(i, x){
-
+function trasladarFiguraEnX(i, x){
         obj=objects[i];
-        obj.translation=[x,obj.translation[1],obj.translation[2]];   
+        obj.translation=[x,obj.translation[1],obj.translation[2]];
 }
 
+function inicializarSlider(){
+ obj=objects[2];
+$("#ex1").attr('data-slider-value',obj.translation[0])
+
+}
