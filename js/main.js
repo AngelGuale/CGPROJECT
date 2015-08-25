@@ -410,6 +410,17 @@ function trasladarFiguraEnX(i, x){
         obj.translation=[x,obj.translation[1],obj.translation[2]];
 }
 
+function trasladarFiguraEnY(i, y){
+        obj=objects[i];
+        obj.translation=[obj.translation[0],y,obj.translation[2]];
+}
+
+
+function trasladarFiguraEnZ(i, z){
+        obj=objects[i];
+        obj.translation=[obj.translation[0],obj.translation[1],z];
+}
+
 function inicializarSlider(){
  obj=objects[2];
 $("#ex1").attr('data-slider-value',obj.translation[0])
