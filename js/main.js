@@ -392,7 +392,7 @@ uniforms=objects[i].uniforms;
         var uni = obj.uniforms;
         var world = uni.u_world;
         m4.identity(world);
-        //m4.rotateY(world, time * obj.ySpeed, world);
+        m4.rotateY(world, time * obj.ySpeed, world);
         //m4.rotateZ(world, time * obj.zSpeed, world);
         //console.log("aqui");
       //          console.log(i);
