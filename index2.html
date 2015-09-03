@@ -132,11 +132,15 @@ void main() {
 
 <body onload="">
     <div class="container">
-     <select name="figura">
-  <option value="cubo">Cubo</option>
-  <option value="esfera">Esfera</option>
-  <option value="dona">Dona</option>
-
+<select name="operation">
+  <option value="t">Trasladar</option>
+  <option value="r">Rotar</option>
+  <option value="e">Escalar</option>
+</select> 
+<select name="figura">
+  <option value="2">Cubo</option>
+  <option value="3">Esfera</option>
+  <option value="4">Dona</option>
 </select> 
 <!--     <button id="rotar" >rotar</button>
     <button id="cancelar rotar" onclick="cancelarAnimation()" >Cancelar</button>
@@ -204,19 +208,7 @@ $('#ez1').on("slide", function(slideEvt) {
 function obtenerIndiceFigSelect(){
 
   figura=$('select[name="figura"]').val()
-  switch(figura) {
-    case "cubo":
-        return 2;
-        break;
-    case "esfera":
-        return 3;
-        break;
-    case "dona":
-        return 4;
-        break;
-    default:
-        return -1;
-  } 
+  return figura;
 }
 
 </script>

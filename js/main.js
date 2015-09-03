@@ -423,6 +423,6 @@ function trasladarFiguraEnZ(i, z){
 
 function inicializarSlider(){
  obj=objects[2];
-$("#ex1").attr('data-slider-value',obj.translation[0])
+$("#ex1").attr('data-slider-value',obj.translation[0]);
 
 }
