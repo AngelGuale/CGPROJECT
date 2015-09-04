@@ -188,18 +188,20 @@ $('#ez1').slider({
 
 
 $('#ex1').on("slide", function(slideEvt) {
-   trasladarFiguraEnX(obtenerIndiceFigSelect(),slideEvt.value);
+    var mat = obtenerOpMatrixSelectX(slideEvt.value);
+    aplicarTransformacion(obtenerIndiceFigSelect(),mat);
 });
 
 
 $('#ey1').on("slide", function(slideEvt) {
-   trasladarFiguraEnY(obtenerIndiceFigSelect(),slideEvt.value);
+    var mat = obtenerOpMatrixSelectY(slideEvt.value);
+    aplicarTransformacion(obtenerIndiceFigSelect(),mat);
 });
 
 
 $('#ez1').on("slide", function(slideEvt) {
-
-   trasladarFiguraEnZ(obtenerIndiceFigSelect(),slideEvt.value);
+    var mat = obtenerOpMatrixSelectZ(slideEvt.value);
+    aplicarTransformacion(obtenerIndiceFigSelect(),mat);
 });
 
 
@@ -211,5 +213,55 @@ function obtenerIndiceFigSelect(){
   return figura;
 }
 
+function obtenerOpMatrixSelectX(value){
+
+  op=$('select[name="operation"]').val()
+  switch(op){
+    case "t":
+        return m4.translation([value, 0, 0]);
+        break;
+    case "r":
+        return m4.rotationX(value);
+        break;
+    case "e":
+        return m4.scaling([value,1,1]);
+        break;
+    };
+  return figura;
+}
+
+function obtenerOpMatrixSelectY(value){
+
+  op=$('select[name="operation"]').val()
+  switch(op){
+    case "t":
+        return m4.translation([0, value, 0]);
+        break;
+    case "r":
+        return m4.rotationY(value);
+        break;
+    case "e":
+        return m4.scaling([1,value,1]);
+        break;
+    };
+  return figura;
+}
+
+function obtenerOpMatrixSelectZ(value){
+
+  op=$('select[name="operation"]').val()
+  switch(op){
+    case "t":
+        return m4.translation([0, 0, value]);
+        break;
+    case "r":
+        return m4.rotationZ(value);
+        break;
+    case "e":
+        return m4.scaling([1,1,value]);
+        break;
+    };
+  return figura;
+}
 </script>
 </html>

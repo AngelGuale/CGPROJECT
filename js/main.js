@@ -9,10 +9,11 @@ var shapes ;
 var programInfo;
 var baseHue;
 var textEsfera;
- var objects = [];
-    var drawObjects = [];
+var objects = [];
+var drawObjects = [];
 var requestId;
 var positions=[];
+var pendingTransformation = [];
 
     function rand(min, max) {
       return min + Math.random() * (max - min);
@@ -392,7 +393,11 @@ uniforms=objects[i].uniforms;
         var uni = obj.uniforms;
         var world = uni.u_world;
         m4.identity(world);
-        m4.rotateY(world, time * obj.ySpeed, world);
+        m4.rotateY(world,time * obj.ySpeed, world);
+        var transf = pendingTransformation[i];
+        if(transf)
+            m4.multiply(world, transf, world);
+        pendingTransformation[i] = null;
         //m4.rotateZ(world, time * obj.zSpeed, world);
         //console.log("aqui");
       //          console.log(i);
@@ -410,6 +415,9 @@ function trasladarFiguraEnX(i, x){
         obj.translation=[x,obj.translation[1],obj.translation[2]];
 }
 
+function aplicarTransformacion(i, mat){
+    pendingTransformation[i] = mat;
+}
 function trasladarFiguraEnY(i, y){
         obj=objects[i];
         obj.translation=[obj.translation[0],y,obj.translation[2]];
