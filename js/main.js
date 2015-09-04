@@ -13,7 +13,7 @@ var objects = [];
 var drawObjects = [];
 var requestId;
 var positions=[];
-var pendingTransformation = [];
+var pendingTransformation = [ ];
 
     function rand(min, max) {
       return min + Math.random() * (max - min);
@@ -298,6 +298,8 @@ var uniforms = {
         uniforms: uniforms,
       };
 
+     pendingTransformation[i] = m4.identity();
+
   
 }
 
@@ -394,10 +396,12 @@ uniforms=objects[i].uniforms;
         var world = uni.u_world;
         m4.identity(world);
         m4.rotateY(world,time * obj.ySpeed, world);
+        
+        //aplicar transformacion
         var transf = pendingTransformation[i];
         if(transf)
             m4.multiply(world, transf, world);
-        pendingTransformation[i] = null;
+
         //m4.rotateZ(world, time * obj.zSpeed, world);
         //console.log("aqui");
       //          console.log(i);
@@ -416,7 +420,7 @@ function trasladarFiguraEnX(i, x){
 }
 
 function aplicarTransformacion(i, mat){
-    pendingTransformation[i] = mat;
+    pendingTransformation[i] = m4.multiply(pendingTransformation[i] , mat );
 }
 function trasladarFiguraEnY(i, y){
         obj=objects[i];
