@@ -145,12 +145,11 @@ void main() {
 <!--     <button id="rotar" >rotar</button>
     <button id="cancelar rotar" onclick="cancelarAnimation()" >Cancelar</button>
  -->    <span>X</span>
-<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
-
-    <span>y</span>
-<input id="ey1" data-slider-id='ex1Slider' type="text" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
+<input id="ex1" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
+    <span>Y</span>
+<input id="ey1" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
     <span>Z</span>
-<input id="ez1" data-slider-id='ex1Slider' type="text" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
+<input id="ez1" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
 
 </div>
 <canvas id="c">
@@ -172,10 +171,7 @@ $("#rotar").click(function(){
 
 //esto solo crea el slider
 $('#ex1').slider({
-    formatter: function(value) {
-        return 'Current value: ' + value;
-      
-    }
+    
 });
 
 $('#ey1').slider({
@@ -188,19 +184,27 @@ $('#ez1').slider({
 
 
 $('#ex1').on("slide", function(slideEvt) {
-    var mat = obtenerOpMatrixSelectX(slideEvt.value);
+    var delta = slideEvt.value - $('#ex1').attr("data-last");
+    console.log("x: " + delta);
+    $('#ex1').attr("data-last", slideEvt.value);
+    var mat = obtenerOpMatrixSelectX(delta);
     aplicarTransformacion(obtenerIndiceFigSelect(),mat);
 });
 
 
 $('#ey1').on("slide", function(slideEvt) {
-    var mat = obtenerOpMatrixSelectY(slideEvt.value);
+    var delta = slideEvt.value - $('#ey1').attr("data-last");
+    console.log("y: " + delta);
+    $('#ey1').attr("data-last", slideEvt.value);
+    var mat = obtenerOpMatrixSelectY(delta);
     aplicarTransformacion(obtenerIndiceFigSelect(),mat);
 });
 
 
 $('#ez1').on("slide", function(slideEvt) {
-    var mat = obtenerOpMatrixSelectZ(slideEvt.value);
+    var delta = slideEvt.value - $('#ez1').attr("data-last");
+    $('#ez1').attr("data-last", slideEvt.value);
+    var mat = obtenerOpMatrixSelectZ(delta);
     aplicarTransformacion(obtenerIndiceFigSelect(),mat);
 });
 

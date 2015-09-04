@@ -395,7 +395,6 @@ uniforms=objects[i].uniforms;
         var uni = obj.uniforms;
         var world = uni.u_world;
         m4.identity(world);
-        m4.rotateY(world,time * obj.ySpeed, world);
         
         //aplicar transformacion
         var transf = pendingTransformation[i];
@@ -433,8 +432,4 @@ function trasladarFiguraEnZ(i, z){
         obj.translation=[obj.translation[0],obj.translation[1],z];
 }
 
-function inicializarSlider(){
- obj=objects[2];
-$("#ex1").attr('data-slider-value',obj.translation[0]);
 
-}
