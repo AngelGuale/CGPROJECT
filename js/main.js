@@ -15,45 +15,46 @@ var requestId;
 var positions=[];
 var pendingTransformation = [ ];
 
-    function rand(min, max) {
-      return min + Math.random() * (max - min);
-    }
-    function render(time) {
-       var windowWidth = window.innerWidth - 20;
-       var windowHeight = window.innerHeight - 40;
-       gl.canvas.width=windowWidth;
-       gl.canvas.height=windowHeight;
-       
-      time *= 0.001;
-      twgl.resizeCanvasToDisplaySize(gl.canvas);
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+function rand(min, max) {
+  return min + Math.random() * (max - min);
+}
 
-      gl.enable(gl.DEPTH_TEST);
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+function render(time) {
+   var windowWidth = window.innerWidth - 20;
+   var windowHeight = window.innerHeight - 40;
+   gl.canvas.width=windowWidth;
+   gl.canvas.height=windowHeight;
+   
+  time *= 0.001;
+  twgl.resizeCanvasToDisplaySize(gl.canvas);
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-      var projection = m4.perspective(30 * Math.PI / 180, gl.canvas.clientWidth / gl.canvas.clientHeight, 0.5, 100);
-      var eye = [-1, 4, -20];
-      var target = [0, 0, 0];
-      var up = [0, 1, 0];
+  gl.enable(gl.DEPTH_TEST);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-      m4.lookAt(eye, target, up, camera);
-      m4.inverse(camera, view);
-      m4.multiply(view, projection, viewProjection);
-        drawPlano(time);
-    //    drawEsfera(time);
-      //  drawCubo();
-        drawFiguraPorIndice(time, 1);
-        drawFiguraPorIndice(time, 2);
-        drawFiguraPorIndice(time, 3);
-      
-        drawFiguraPorIndice(time, 4);
+  var projection = m4.perspective(30 * Math.PI / 180, gl.canvas.clientWidth / gl.canvas.clientHeight, 0.5, 100);
+  var eye = [-1, 4, -20];
+  var target = [0, 0, 0];
+  var up = [0, 1, 0];
+
+  m4.lookAt(eye, target, up, camera);
+  m4.inverse(camera, view);
+  m4.multiply(view, projection, viewProjection);
+    drawPlano(time);
+//    drawEsfera(time);
+  //  drawCubo();
+    drawFiguraPorIndice(time, 1);
+    drawFiguraPorIndice(time, 2);
+    drawFiguraPorIndice(time, 3);
+  
+    drawFiguraPorIndice(time, 4);
 
 
-      twgl.drawObjectList(gl, drawObjects);
+  twgl.drawObjectList(gl, drawObjects);
 
-    requestId= requestAnimationFrame(render);
+requestId= requestAnimationFrame(render);
 
-    }
+}
 
 
 function iniciar(){
@@ -148,8 +149,6 @@ function iniciar(){
 }
 
 
-
-
 function cancelarAnimation(){
 
 if(requestId){
@@ -158,45 +157,6 @@ if(requestId){
 }
 
 }
-
-
-function settingsEsfera(){
-
- var initial_position=[-2,1,0];//esfera
-    textEsfera = twgl.createTexture(gl, {
-      min: gl.NEAREST,
-      mag: gl.NEAREST,
-      src: "textura/baseball.jpg",
-    });
-    console.log(chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl());
-
-var uniforms = {
-        u_lightWorldPos: lightWorldPosition,
-        u_lightColor: lightColor,
-
-     //   u_diffuseMult: chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl(),
-        u_diffuseMult: [1,1,1,1],
-        u_specular: [1, 1, 1, 1],
-        u_shininess: 50,
-        u_specularFactor: 1,
-        u_diffuse: textEsfera,
-        u_viewInverse: camera,
-        u_world: m4.identity(),
-        u_worldInverseTranspose: m4.identity(),
-        u_worldViewProjection: m4.identity(),
-      };
-
-
-     objects[3]={
-         translation: initial_position,
-        ySpeed: rand(0.1, 0.3),
-        zSpeed: rand(0.1, 0.3),
-        uniforms: uniforms,
-      };
-
-  
-}
-
 
 function settingsPlano(){
 
@@ -231,52 +191,15 @@ var uniforms = {
   
 }
 
-
-
-
-function settingsCubo(){
-
- var initial_position=[0,0,0];//esfera
-    textEsfera = twgl.createTexture(gl, {
-      min: gl.NEAREST,
-      mag: gl.NEAREST,
-      src: "textura/ajedrez.jpg",
-    });
-var uniforms = {
-        u_lightWorldPos: lightWorldPosition,
-        u_lightColor: lightColor,
-       u_diffuseMult: [1,1,1,1],
-        u_specular: [1, 1, 1, 1],
-        u_shininess: 50,
-        u_specularFactor: 1,
-        u_diffuse: textEsfera,
-        u_viewInverse: camera,
-        u_world: m4.identity(),
-        u_worldInverseTranspose: m4.identity(),
-        u_worldViewProjection: m4.identity(),
-      };
-
-
-     objects[2]={
-         translation: initial_position,
-        ySpeed: rand(0.1, 0.3),
-        zSpeed: rand(0.1, 0.3),
-        uniforms: uniforms,
-      };
-
-  
-}
-
-
 function settingsFiguraPorIndice(i){
 
- initial_position=positions[i];//esfera
+    initial_position=positions[i];//esfera
     textEsfera = twgl.createTexture(gl, {
       min: gl.NEAREST,
       mag: gl.NEAREST,
       src: "textura/ajedrez.jpg",
     });
-var uniforms = {
+    var uniforms = {
         u_lightWorldPos: lightWorldPosition,
         u_lightColor: lightColor,
        u_diffuseMult: [1,1,1,1],
@@ -288,95 +211,42 @@ var uniforms = {
         u_world: m4.identity(),
         u_worldInverseTranspose: m4.identity(),
         u_worldViewProjection: m4.identity(),
-      };
+   };
 
 
-     objects[i]={
-         translation: initial_position,
-        ySpeed: rand(0.1, 0.3),
-        zSpeed: rand(0.1, 0.3),
-        uniforms: uniforms,
-      };
+   objects[i]={
+     translation: initial_position,
+    ySpeed: rand(0.1, 0.3),
+    zSpeed: rand(0.1, 0.3),
+    uniforms: uniforms,
+   };
 
      pendingTransformation[i] = m4.identity();
 
   
 }
 
-function drawEsfera(time){
-  
-
-uniforms=objects[3].uniforms;
-   drawObjects[3]={
-        programInfo: programInfo,
-        bufferInfo: shapes[3],
-        uniforms: uniforms,
-      };
-
-        var obj=objects[3];
-
-        var uni = obj.uniforms;
-        var world = uni.u_world;
-        m4.identity(world);
-        m4.rotateY(world, time * obj.ySpeed, world);
-        //m4.rotateZ(world, time * obj.zSpeed, world);
-        m4.translate(world, obj.translation, world);
-        //m4.rotateX(world, time, world);
-        m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
-        m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
-   
-   
-   }
-
-
 function drawPlano(time){
   
-
-uniforms=objects[0].uniforms;
-   drawObjects[0]={
+    uniforms=objects[0].uniforms;
+    drawObjects[0]={
         programInfo: programInfo,
         bufferInfo: shapes[0],
         uniforms: uniforms,
-      };
+    };
 
-        var obj=objects[0];
+    var obj=objects[0];
 
-        var uni = obj.uniforms;
-        var world = uni.u_world;
-        m4.identity(world);
-        //m4.rotateY(world, time * obj.ySpeed, world);
-        //m4.rotateZ(world, time * obj.zSpeed, world);
-        m4.translate(world, obj.translation, world);
-        //m4.rotateX(world, time, world);
-      //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
-        m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
-   
-   
-   }
+    var uni = obj.uniforms;
+    var world = uni.u_world;
+    m4.identity(world);
+    //m4.rotateY(world, time * obj.ySpeed, world);
+    //m4.rotateZ(world, time * obj.zSpeed, world);
+    m4.translate(world, obj.translation, world);
+    //m4.rotateX(world, time, world);
+  //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
+    m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
 
-
-function drawCubo(time){
-  
-
-uniforms=objects[2].uniforms;
-   drawObjects[2]={
-        programInfo: programInfo,
-        bufferInfo: shapes[2],
-        uniforms: uniforms,
-      };
-
-        var obj=objects[2];
-
-        var uni = obj.uniforms;
-        var world = uni.u_world;
-        m4.identity(world);
-        //m4.rotateY(world, time * obj.ySpeed, world);
-        //m4.rotateZ(world, time * obj.zSpeed, world);
-        m4.translate(world, obj.translation, world);
-        //m4.rotateX(world, time, world);
-      //  m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
-        m4.multiply(uni.u_world, viewProjection, uni.u_worldViewProjection);
-   
    
    }
 
@@ -413,23 +283,7 @@ uniforms=objects[i].uniforms;
    
    }
 
-function trasladarFiguraEnX(i, x){
-        obj=objects[i];
-        obj.translation=[x,obj.translation[1],obj.translation[2]];
-}
-
 function aplicarTransformacion(i, mat){
     pendingTransformation[i] = m4.multiply(pendingTransformation[i] , mat );
 }
-function trasladarFiguraEnY(i, y){
-        obj=objects[i];
-        obj.translation=[obj.translation[0],y,obj.translation[2]];
-}
-
-
-function trasladarFiguraEnZ(i, z){
-        obj=objects[i];
-        obj.translation=[obj.translation[0],obj.translation[1],z];
-}
-
 
