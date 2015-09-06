@@ -309,8 +309,7 @@ uniforms=objects[i].uniforms;
         var transf = pendingTransformation[i];
         if(transf)
             m4.multiply(world, transf, world);
-
-        //m4.rotateZ(world, time * obj.zSpeed, world);
+                //m4.rotateZ(world, time * obj.zSpeed, world);
         //console.log("aqui");
       //          console.log(i);
         //console.log(obj.translation);
@@ -342,4 +341,15 @@ function aplicarTransformacion(i, mat){
          obj=objects[i];
          obj.translation=[obj.translation[0],obj.translation[1],z];
  }
- 
+
+ function detectCollision(mat, vec, rad){
+     var transformed = m4.transformDirection(mat, vec);
+     //colision con cilindro
+     if (Math.abs(transformed[0]) < 0.3 + rad  && Math.abs(transformed[1]) < 0.3 + rad)
+         return true;
+    //colision con plano
+     if (Math.abs(transformed[2]) < rad)
+         return true;
+     
+     return false;
+ }
