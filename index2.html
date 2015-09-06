@@ -184,20 +184,35 @@ $('#ez1').slider({
 
 
 $('#ex1').on("slide", function(slideEvt) {
+  if(op=$('select[name="operation"]').val()=="t"){
+    trasladarFiguraEnX(obtenerIndiceFigSelect(),slideEvt.value);
+  }else{
     var mat = obtenerOpMatrixSelectX($('#ex1').attr("data-last"), slideEvt.value);
     aplicarTransformacion(obtenerIndiceFigSelect(),mat);
+  }
+       
 });
 
 
 $('#ey1').on("slide", function(slideEvt) {
+   if(op=$('select[name="operation"]').val()=="t"){
+     trasladarFiguraEnY(obtenerIndiceFigSelect(),slideEvt.value);
+ 
+  }else{
     var mat = obtenerOpMatrixSelectY($('#ey1').attr("data-last"), slideEvt.value);
     aplicarTransformacion(obtenerIndiceFigSelect(),mat);
+  }
 });
 
 
 $('#ez1').on("slide", function(slideEvt) {
+   if(op=$('select[name="operation"]').val()=="t"){
+    trasladarFiguraEnZ(obtenerIndiceFigSelect(),slideEvt.value);
+ 
+  }else{
     var mat = obtenerOpMatrixSelectZ($('#ez1').attr("data-last"), slideEvt.value);
         aplicarTransformacion(obtenerIndiceFigSelect(),mat);
+      }
 });
 
 
