@@ -14,6 +14,7 @@ var drawObjects = [];
 var requestId;
 var positions=[];
 var pendingTransformation = [ ];
+var texturas=[];
 
 function rand(min, max) {
   return min + Math.random() * (max - min);
@@ -102,6 +103,37 @@ function iniciar(){
     positions[3]=[-2,1,0];//esfera
     positions[4]=[3,2,-1];//torus
 
+       texturas[0] = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/ajedrez.jpg",
+    });
+
+     texturas[1] = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/concreto.jpg",
+    });
+      texturas[2] = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/madera.jpg",
+    });
+
+
+      texturas[3] = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/baseball.jpg",
+    });
+
+      texturas[4] = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/rosado.jpg",
+    });
+
+
 /*
 
      for (var ii = 0; ii < numObjects; ++ii) {
@@ -161,11 +193,18 @@ if(requestId){
 function settingsPlano(){
 
  var initial_position=[0,0,0];//esfera
-    textEsfera = twgl.createTexture(gl, {
+    texturas[0] = twgl.createTexture(gl, {
       min: gl.NEAREST,
       mag: gl.NEAREST,
       src: "textura/ajedrez.jpg",
     });
+
+     texturas[1] = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: "textura/concreto.jpg",
+    });
+
 var uniforms = {
         u_lightWorldPos: lightWorldPosition,
         u_lightColor: lightColor,
@@ -194,11 +233,11 @@ var uniforms = {
 function settingsFiguraPorIndice(i){
 
     initial_position=positions[i];//esfera
-    textEsfera = twgl.createTexture(gl, {
-      min: gl.NEAREST,
-      mag: gl.NEAREST,
-      src: "textura/ajedrez.jpg",
-    });
+    // textEsfera = twgl.createTexture(gl, {
+    //   min: gl.NEAREST,
+    //   mag: gl.NEAREST,
+    //   src: "textura/ajedrez.jpg",
+    // });
     var uniforms = {
         u_lightWorldPos: lightWorldPosition,
         u_lightColor: lightColor,
@@ -206,7 +245,7 @@ function settingsFiguraPorIndice(i){
         u_specular: [1, 1, 1, 1],
         u_shininess: 50,
         u_specularFactor: 1,
-        u_diffuse: textEsfera,
+        u_diffuse: texturas[i],
         u_viewInverse: camera,
         u_world: m4.identity(),
         u_worldInverseTranspose: m4.identity(),
