@@ -132,15 +132,23 @@ void main() {
 
 <body onload="">
     <div class="container">
+<a>Operaci&oacute;n</a>
 <select name="operation">
   <option value="t">Trasladar</option>
   <option value="r">Rotar</option>
   <option value="e">Escalar</option>
 </select> 
+<a>Figura</a>
 <select name="figura">
   <option value="2">Cubo</option>
   <option value="3">Esfera</option>
   <option value="4">Dona</option>
+</select> 
+<a>Textura</a>
+<select name="textura">
+  <option value="textura/madera.jpg">Madera</option>
+  <option value="textura/metal.jpg">Metal</option>
+  <option value="textura/ajedrez.jpg">Ajedrez</option>
 </select> 
 <!--     <button id="rotar" >rotar</button>
     <button id="cancelar rotar" onclick="cancelarAnimation()" >Cancelar</button>
@@ -283,5 +291,22 @@ function obtenerOpMatrixSelectZ(inicio, fin){
     };
   return figura;
 }
+
+$('select[name="textura"]').on("change",function(){
+
+  figura=$('select[name="figura"]').val()
+  text_src=$(this).val();
+  console.log(texturas[figura]);
+   text = twgl.createTexture(gl, {
+      min: gl.NEAREST,
+      mag: gl.NEAREST,
+      src: text_src,
+    });
+    
+  objects[figura].uniforms.u_diffuse=text;
+
+});
+
+
 </script>
 </html>
