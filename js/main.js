@@ -112,7 +112,7 @@ function iniciar(){
      texturas[1] = twgl.createTexture(gl, {
       min: gl.NEAREST,
       mag: gl.NEAREST,
-      src: "textura/concreto.jpg",
+      src: "textura/metal.jpg",
     });
       texturas[2] = twgl.createTexture(gl, {
       min: gl.NEAREST,
