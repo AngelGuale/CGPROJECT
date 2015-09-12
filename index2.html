@@ -159,6 +159,9 @@ void main() {
     <span>Z</span>
 <input id="ez1" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
 
+<button id="zoom_mas">zoommas</button>
+
+<button id="zoom_menos">zoommenos</button>
 </div>
 <canvas id="c">
     If you're seeing this your web browser doesn't support the &lt;canvas>&gt; element. Ouch!
@@ -307,6 +310,17 @@ $('select[name="textura"]').on("change",function(){
 
 });
 
+$('#zoom_mas').click(function(){
+  //eye[0]-=2;
+  //eye[1]=2;
+  eye[2]+=2;
+});
 
+
+$('#zoom_menos').click(function(){
+  //eye[0]-=2;
+  //eye[1]=2;
+  eye[2]-=2;
+});
 </script>
 </html>

@@ -15,7 +15,7 @@ var requestId;
 var positions=[];
 var pendingTransformation = [ ];
 var texturas=[];
-
+var eye=[1, 4, -20];
 function rand(min, max) {
   return min + Math.random() * (max - min);
 }
@@ -34,7 +34,9 @@ function render(time) {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   var projection = m4.perspective(30 * Math.PI / 180, gl.canvas.clientWidth / gl.canvas.clientHeight, 0.5, 100);
-  var eye = [-1, 4, -20];
+ // eye = [1, 4, -20];
+   //var eye = [1,4, 20];
+ 
   var target = [0, 0, 0];
   var up = [0, 1, 0];
 
