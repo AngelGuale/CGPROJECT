@@ -33,6 +33,19 @@ function render(time) {
   gl.enable(gl.DEPTH_TEST);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+    var blending = document.getElementById("transparente").checked;
+        if (blending) {
+            
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+            gl.enable(gl.BLEND);
+            gl.disable(gl.DEPTH_TEST);
+            gl.uniform1f(programInfo.alphaUniform, 3.0);
+        } else {
+            gl.disable(gl.BLEND);
+            gl.enable(gl.DEPTH_TEST);
+        }
+  
+
   var projection = m4.perspective(30 * Math.PI / 180, gl.canvas.clientWidth / gl.canvas.clientHeight, 0.5, 100);
  // eye = [1, 4, -20];
    //var eye = [1,4, 20];
@@ -217,6 +230,21 @@ var uniforms = {
         u_worldInverseTranspose: m4.identity(),
         u_worldViewProjection: m4.identity(),
    };
+/* aqui lo que vle es esto
+  var uniforms = {
+        u_lightWorldPos: lightWorldPosition,
+        u_lightColor: lightColor,
+       u_diffuseMult: [1,1,1,1],
+        u_specular: [1, 1, 1, 1],
+        u_shininess: 50,
+        u_specularFactor: 1,
+        u_diffuse: texturas[i],
+        u_viewInverse: camera,
+        u_world: m4.identity(),
+        u_worldInverseTranspose: m4.identity(),
+        u_worldViewProjection: m4.identity(),
+   };
+   */
 
 
    objects[i]={
