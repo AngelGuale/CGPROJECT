@@ -195,21 +195,27 @@ $('#ez1').slider({
 
 
 $('#ex1').on("slide", function(slideEvt) {
-    var mat = obtenerOpMatrixSelectX($('#ex1').attr("data-last"), slideEvt.value);
-    aplicarTransformacion(obtenerIndiceFigSelect(),mat);
+    var index = obtenerIndiceFigSelect();
+    var mat = obtenerOpMatrixSelectX($('#ex1').attr("data-last"),
+    slideEvt.value, index);
+    aplicarTransformacion(index, mat);
        
 });
 
 
 $('#ey1').on("slide", function(slideEvt) {
-    var mat = obtenerOpMatrixSelectY($('#ey1').attr("data-last"), slideEvt.value);
-    aplicarTransformacion(obtenerIndiceFigSelect(),mat);
+    var index = obtenerIndiceFigSelect();
+    var mat = obtenerOpMatrixSelectY($('#ey1').attr("data-last"),
+    slideEvt.value, index);
+    aplicarTransformacion(index, mat);
 });
 
 
 $('#ez1').on("slide", function(slideEvt) {
-    var mat = obtenerOpMatrixSelectZ($('#ez1').attr("data-last"), slideEvt.value);
-        aplicarTransformacion(obtenerIndiceFigSelect(),mat);
+    var index = obtenerIndiceFigSelect();
+    var mat = obtenerOpMatrixSelectZ($('#ez1').attr("data-last"),
+    slideEvt.value, index);
+        aplicarTransformacion(index,mat);
 });
 
 
@@ -221,24 +227,31 @@ function obtenerIndiceFigSelect(){
   return figura;
 }
 
-function obtenerOpMatrixSelectX(inicio, fin){
+function obtenerOpMatrixSelectX(inicio, fin, index){
     var value = fin - inicio;
     if(Math.abs(value) < 1)
         return m4.identity();
 
-    console.log(value);
-    $('#ex1').attr("data-last", fin);
 
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
-        return m4.translation([value, 0, 0]);
+        var pos = objects[index].rad_pos;
+        var trans = m4.translation([value, 0, 0]);
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ex1').attr("data-last", fin);
+            return trans;
+        }
         break;
     case "r":
+        $('#ex1').attr("data-last", fin);
         return m4.rotationX(value);
         break;
     case "e":
-
+        $('#ex1').attr("data-last", fin);
         if(value < 0)
             value = Math.abs(1/value);
         return m4.scaling([value,1,1]);   
@@ -247,22 +260,31 @@ function obtenerOpMatrixSelectX(inicio, fin){
   return figura;
 }
 
-function obtenerOpMatrixSelectY(inicio, fin){
+function obtenerOpMatrixSelectY(inicio, fin, index){
     var value = fin - inicio;
     if(Math.abs(value) < 1)
         return m4.identity();
 
-    $('#ey1').attr("data-last", fin);
 
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
-        return m4.translation([0, value, 0]);
+        var pos = objects[index].rad_pos;
+        var trans = m4.translation([0, value, 0]);
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ey1').attr("data-last", fin);
+            return trans;
+        }
         break;
     case "r":
+        $('#ey1').attr("data-last", fin);
         return m4.rotationY(value);
         break;
     case "e":
+        $('#ey1').attr("data-last", fin);
         if(value < 0)
             value = Math.abs(1/value);
         return m4.scaling([1,value,1]);   
@@ -271,21 +293,30 @@ function obtenerOpMatrixSelectY(inicio, fin){
   return figura;
 }
 
-function obtenerOpMatrixSelectZ(inicio, fin){
+function obtenerOpMatrixSelectZ(inicio, fin, index){
     var value = fin - inicio;
     if(Math.abs(value) < 1)
         return m4.identity();
-    $('#ez1').attr("data-last", fin);
 
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
-        return m4.translation([0, 0, value]);
+        var pos = objects[index].rad_pos;
+        var trans = m4.translation([0, 0, value]);
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ez1').attr("data-last", fin);
+            return trans;
+        }
         break;
     case "r":
+        $('#ez1').attr("data-last", fin);
         return m4.rotationZ(value);
         break;
     case "e":
+        $('#ez1').attr("data-last", fin);
         if(value < 0)
             value = Math.abs(1/value);
         return m4.scaling([1,1,value]);
