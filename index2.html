@@ -288,6 +288,7 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
+        if(fin>0){
         var trans = m4.translation([0, value, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index))
@@ -296,6 +297,9 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
             $('#ey1').attr("data-last", fin);
             return trans;
         }
+      }else{
+        return m4.identity();
+      }
         break;
     case "r":
         var trans = m4.rotationY(value);
