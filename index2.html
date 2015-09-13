@@ -277,9 +277,14 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
     case "e":
         if(value < 0)
             value = Math.abs(1/value);
-        var trans = m4.scaling([1,value,1]);
+        var trans = m4.scaling([value,1,1]);
         var newRadius = objects[index].rad_size * value;
         var mat = m4.multiply(pendingTransformation[index], trans);
+        if(value<0.1 || value >2){
+          $('#ex1').attr("data-last", fin);
+            $('#ex1').attr("data-slider-value", inicio);
+            return m4.identity();
+        }                               
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
           $('#ex1').attr("data-last", fin);
             
@@ -339,6 +344,11 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
         var trans = m4.scaling([1,value,1]);
         var newRadius = objects[index].rad_size * value;
         var mat = m4.multiply(pendingTransformation[index], trans);
+         if(value<0.1 || value >2){
+          $('#ey1').attr("data-last", fin);
+            $('#ey1').attr("data-slider-value", inicio);
+            return m4.identity();
+        }  
        if(detectCollision(mat, pos, objects[index].rad_size, index)){
              $('#ey1').attr("data-last", fin);
             $('#ey1').attr("data-slider-value", inicio);
@@ -377,7 +387,11 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
     case "r":
         var trans = m4.rotationZ(value/3);
         var mat = m4.multiply(pendingTransformation[index], trans);
-        
+        if(isDebajoDelPlano(mat, pos, objects[index].rad_size, index)){
+           $('#ez1').attr("data-last", fin);
+            $('#ez1').attr("data-slider-value", inicio);
+            return m4.identity();
+        }
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
                $('#ez1').attr("data-last", fin);
             $('#ez1').attr("data-slider-value", inicio);
@@ -397,6 +411,12 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
         var trans = m4.scaling([1,1,value]);
         var newRadius = objects[index].rad_size * value;
         var mat = m4.multiply(pendingTransformation[index], trans);
+        if(value<0.1 || value >2){
+          $('#ez1').attr("data-last", fin);
+            
+            $('#ez1').attr("data-slider-value", inicio);
+            return m4.identity();
+        } 
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
              $('#ez1').attr("data-last", fin);
             $('#ez1').attr("data-slider-value", inicio);

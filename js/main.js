@@ -382,7 +382,7 @@ function aplicarTransformacion(i, mat){
 
  function isDebajoDelPlano(mat, vec, rad, index){
       var transformed = m4.transformPoint(mat, vec);
-      if (Math.abs(transformed[1]) < rad+0.1){
+      if (Math.abs(transformed[1]) < rad+0.05){
          console.log("plano  crash");
          return true;
      }
