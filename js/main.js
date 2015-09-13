@@ -283,6 +283,9 @@ function drawPlano(time){
     var uni = obj.uniforms;
     var world = uni.u_world;
     m4.identity(world);
+    if($("#animBox").is(":checked")){
+            m4.rotateY(world, time * obj.zSpeed, world);
+        }
     //m4.rotateY(world, time * obj.ySpeed, world);
     //m4.rotateZ(world, time * obj.zSpeed, world);
     m4.translate(world, obj.translation, world);
@@ -310,9 +313,13 @@ uniforms=objects[i].uniforms;
         m4.identity(world);
         
         //aplicar transformacion
-        var transf = pendingTransformation[i];
-        if(transf)
+        if($("#animBox").is(":checked")){
+            m4.rotateY(world, time * obj.zSpeed, world);
+        } else {
+            var transf = pendingTransformation[i];
+            if(transf)
             m4.multiply(world, transf, world);
+        }
                 //m4.rotateZ(world, time * obj.zSpeed, world);
         //console.log("aqui");
       //          console.log(i);
