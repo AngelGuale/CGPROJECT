@@ -255,6 +255,8 @@ function settingsFiguraPorIndice(i){
 
    objects[i]={
      translation: initial_position,
+     rad_pos: initial_position,
+     rad_size: 1,
     ySpeed: rand(0.1, 0.3),
     zSpeed: rand(0.1, 0.3),
     uniforms: uniforms,
@@ -343,13 +345,19 @@ function aplicarTransformacion(i, mat){
  }
 
  function detectCollision(mat, vec, rad){
-     var transformed = m4.transformDirection(mat, vec);
+     var transformed = m4.transformPoint(mat, vec);
+     console.log("result: " + transformed[0] + " " + transformed[1]+ " " + transformed[2]);
      //colision con cilindro
-     if (Math.abs(transformed[0]) < 0.3 + rad  && Math.abs(transformed[1]) < 0.3 + rad)
+     if (Math.abs(transformed[0]) < 0.3 + rad  && Math.abs(transformed[1]) < 0.3 + rad &&
+            Math.abs(transformed[2]) < 0.3 + rad ){
+         console.log("cilindro crash");
          return true;
+     }
     //colision con plano
-     if (Math.abs(transformed[2]) < rad)
+     if (Math.abs(transformed[1]) < rad){
+         console.log("plano  crash");
          return true;
+     }
      
      return false;
  }
