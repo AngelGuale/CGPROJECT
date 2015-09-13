@@ -346,9 +346,8 @@ function aplicarTransformacion(i, mat){
          obj.translation=[obj.translation[0],obj.translation[1],z];
  }
 
- function detectCollision(mat, vec, rad){
+ function detectCollision(mat, vec, rad, index){
      var transformed = m4.transformPoint(mat, vec);
-     console.log("result: " + transformed[0] + " " + transformed[1]+ " " + transformed[2]);
      //colision con cilindro
      if (Math.abs(transformed[0]) < 0.3 + rad  && Math.abs(transformed[1]) < 0.3 + rad &&
             Math.abs(transformed[2]) < 0.3 + rad ){
@@ -359,6 +358,21 @@ function aplicarTransformacion(i, mat){
      if (Math.abs(transformed[1]) < rad){
          console.log("plano  crash");
          return true;
+     }
+
+     var i, j;
+     for( i=2; i < 5; i++){
+         if(i != index){
+             var figura = objects[i].rad_pos;
+             for(j = 0; j < 3; j++){
+                 if(Math.abs(transformed[0] - figura[0]) < 2 * rad &&
+                     Math.abs(transformed[1] - figura[1]) < 2 * rad &&
+                     Math.abs(transformed[2] - figura[2]) < 2 * rad ){
+                    console.log("figura crash");
+                    return true;
+                 }
+             }
+         }
      }
      
      return false;

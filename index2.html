@@ -265,7 +265,7 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         var trans = m4.scaling([1,value,1]);
         var newRadius = objects[index].rad_size * value;
         var mat = m4.multiply(pendingTransformation[index], trans);
-        if(detectCollision(mat, pos, objects[index].rad_size))
+        if(detectCollision(mat, pos, objects[index].rad_size, index))
             return m4.identity();
         else {
             $('#ex1').attr("data-last", fin);
@@ -289,7 +289,7 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
     case "t":
         var trans = m4.translation([0, value, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
-        if(detectCollision(mat, pos, objects[index].rad_size))
+        if(detectCollision(mat, pos, objects[index].rad_size, index))
             return m4.identity();
         else {
             $('#ey1').attr("data-last", fin);
@@ -336,7 +336,7 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
     case "t":
         var trans = m4.translation([0, 0, value]);
         var mat = m4.multiply(pendingTransformation[index], trans);
-        if(detectCollision(mat, pos, objects[index].rad_size))
+        if(detectCollision(mat, pos, objects[index].rad_size, index))
             return m4.identity();
         else {
             $('#ez1').attr("data-last", fin);
@@ -365,7 +365,6 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
             return m4.identity();
         else {
             $('#ez1').attr("data-last", fin);
-            console.log("new radius" + newRadius);
             return trans;
         }
         break;
