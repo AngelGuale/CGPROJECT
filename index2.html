@@ -233,7 +233,7 @@ function obtenerIndiceFigSelect(){
 
 function obtenerOpMatrixSelectX(inicio, fin, index){
     var value = fin - inicio;
-    if(Math.abs(value) < 1){
+    if(Math.abs(value) < 1 && Math.abs(value) >= 2){
         return m4.identity();
 } 
 
@@ -244,6 +244,7 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         var trans = m4.translation([value, 0, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
+           $('#ex1').attr("data-last", fin);
             $('#ex1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -286,7 +287,7 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
 
 function obtenerOpMatrixSelectY(inicio, fin, index){
     var value = fin - inicio;
-    if(Math.abs(value) < 1 && Math.abs(value) > 3)
+    if(Math.abs(value) < 1 && Math.abs(value) >= 2)
         return m4.identity();
 
 
@@ -297,6 +298,7 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
         var trans = m4.translation([0, value, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
          if(detectCollision(mat, pos, objects[index].rad_size, index)){
+          $('#ey1').attr("data-last", fin);
             $('#ey1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -340,7 +342,7 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
 
 function obtenerOpMatrixSelectZ(inicio, fin, index){
     var value = fin - inicio;
-    if(Math.abs(value) < 1)
+    if(Math.abs(value) < 1 && Math.abs(value) >=2)
         return m4.identity();
 
   var pos = objects[index].rad_pos;
@@ -350,6 +352,7 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
         var trans = m4.translation([0, 0, value]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
+          $('#ez1').attr("data-last", fin);
             $('#ez1').attr("data-slider-value", inicio);
             return m4.identity();
           }
