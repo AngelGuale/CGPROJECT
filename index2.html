@@ -234,6 +234,9 @@ function obtenerIndiceFigSelect(){
 function obtenerOpMatrixSelectX(inicio, fin, index){
     var value = fin - inicio;
     if(Math.abs(value) < 1 && Math.abs(value) >= 2){
+        $('#ex1').attr("data-last", inicio);
+            $('#ex1').attr("data-slider-value", inicio);
+            
         return m4.identity();
 } 
 
@@ -244,7 +247,7 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         var trans = m4.translation([value, 0, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
-           $('#ex1').attr("data-last", fin);
+            $('#ex1').attr("data-last", fin);
             $('#ex1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -254,9 +257,10 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         }
         break;
     case "r":
-        var trans = m4.rotationX(value);
+        var trans = m4.rotationX(value/3);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
+            $('#ex1').attr("data-last", fin);
             $('#ex1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -272,6 +276,8 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         var newRadius = objects[index].rad_size * value;
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
+          $('#ex1').attr("data-last", fin);
+            
             $('#ex1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -308,9 +314,10 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
         }
         break;
     case "r":
-        var trans = m4.rotationY(value);
+        var trans = m4.rotationY(value/2);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
+             $('#ey1').attr("data-last", fin);
             $('#ey1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -328,6 +335,7 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
         var newRadius = objects[index].rad_size * value;
         var mat = m4.multiply(pendingTransformation[index], trans);
        if(detectCollision(mat, pos, objects[index].rad_size, index)){
+             $('#ey1').attr("data-last", fin);
             $('#ey1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -362,9 +370,10 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
         }
         break;
     case "r":
-        var trans = m4.rotationZ(value);
+        var trans = m4.rotationZ(value/3);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
+               $('#ez1').attr("data-last", fin);
             $('#ez1').attr("data-slider-value", inicio);
             return m4.identity();
           }
@@ -382,6 +391,7 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
         var newRadius = objects[index].rad_size * value;
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
+             $('#ez1').attr("data-last", fin);
             $('#ez1').attr("data-slider-value", inicio);
             return m4.identity();
           }
