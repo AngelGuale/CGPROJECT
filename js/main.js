@@ -26,7 +26,7 @@ function render(time) {
    gl.canvas.width=windowWidth;
    gl.canvas.height=windowHeight;
    
-  time *= 0.001;
+  time *= 0.003;
   twgl.resizeCanvasToDisplaySize(gl.canvas);
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
@@ -135,43 +135,7 @@ function iniciar(){
       src: "textura/rosado.jpg",
     });
 
-
-/*
-
-     for (var ii = 0; ii < numObjects; ++ii) {
-      var uniforms = {
-        u_lightWorldPos: lightWorldPosition,
-        u_lightColor: lightColor,
-        u_diffuseMult: chroma.hsv((baseHue + rand(0, 60)) % 360, 0.4, 0.8).gl(),
-        u_specular: [1, 1, 1, 1],
-        u_shininess: 50,
-        u_specularFactor: 1,
-        u_diffuse: textEsfera,
-        u_viewInverse: camera,
-        u_world: m4.identity(),
-        u_worldInverseTranspose: m4.identity(),
-        u_worldViewProjection: m4.identity(),
-      };
-      drawObjects.push({
-        programInfo: programInfo,
-        bufferInfo: shapes[ii],
-        uniforms: uniforms,
-      });
-
-     objects.push({
-         translation: initial_positions[ii],
-        ySpeed: rand(0.1, 0.3),
-        zSpeed: rand(0.1, 0.3),
-        uniforms: uniforms,
-      });
-    
-
-}
-*/
-  //settingsEsfera();
-  //settingsPlano();
-  //settingsCubo();
-  settingsFiguraPorIndice(0);
+ settingsFiguraPorIndice(0);
   settingsFiguraPorIndice(1);
   settingsFiguraPorIndice(2);
   settingsFiguraPorIndice(3);
@@ -192,7 +156,7 @@ if(requestId){
 
 }
 
-function settingsPlano(){
+/*function settingsPlano(){
 
  var initial_position=[0,0,0];//esfera
     texturas[0] = twgl.createTexture(gl, {
@@ -232,7 +196,7 @@ var uniforms = {
   
 }
 
-function settingsFiguraPorIndice(i){
+*/function settingsFiguraPorIndice(i){
 
     initial_position=positions[i];//esfera
     // textEsfera = twgl.createTexture(gl, {
@@ -284,7 +248,7 @@ function drawPlano(time){
     var world = uni.u_world;
     m4.identity(world);
     if($("#animBox").is(":checked")){
-            m4.rotateY(world, time * obj.zSpeed, world);
+           // m4.rotateY(world, time * obj.zSpeed, world);
         }
     //m4.rotateY(world, time * obj.ySpeed, world);
     //m4.rotateZ(world, time * obj.zSpeed, world);
@@ -314,6 +278,7 @@ uniforms=objects[i].uniforms;
         
         //aplicar transformacion
         if($("#animBox").is(":checked")){
+          if(i>1)
             m4.rotateY(world, time * obj.zSpeed, world);
         } else {
             var transf = pendingTransformation[i];

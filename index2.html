@@ -390,9 +390,9 @@ $('select[name="textura"]').on("change",function(){
 
 $('#zoom_mas').click(function(){
    scal_vec=[];
-   scal_vec[0]=-eye[0]/5;
-   scal_vec[1]=-eye[1]/5;
-   scal_vec[2]=-eye[2]/5;
+   scal_vec[0]=-eye[0]/10;
+   scal_vec[1]=-eye[1]/10;
+   scal_vec[2]=-eye[2]/10;
   
    mat=m4.translation(scal_vec);
   m4.transformPoint(mat, eye, eye);
@@ -402,9 +402,9 @@ $('#zoom_mas').click(function(){
 
 $('#zoom_menos').click(function(){
     scal_vec=[];
-   scal_vec[0]=eye[0]/5;
-   scal_vec[1]=eye[1]/5;
-   scal_vec[2]=eye[2]/5;
+   scal_vec[0]=eye[0]/10;
+   scal_vec[1]=eye[1]/10;
+   scal_vec[2]=eye[2]/10;
   
    mat=m4.translation(scal_vec);
   m4.transformPoint(mat, eye, eye);
