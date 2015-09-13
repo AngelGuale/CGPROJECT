@@ -6,22 +6,21 @@
 
  <link rel="stylesheet" href="slider/css/slider.css">
 
-<!-- <script type="text/javascript" src="js/webgl-utils.js"></script>
- --><script type="text/javascript" src="js/twgl-full.min.js"></script>
+ <script type="text/javascript" src="js/twgl-full.min.js"></script>
 
 <script type="text/javascript" src="js/chroma.min.js"></script>
    
 <script type="text/javascript" src="slider/js/bootstrap-slider.js"></script>
-<!--    
-<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
- -->
-<!-- <script type="text/javascript" src="js/primitives.js"></script>
- -->
-
+<link href="css/materialdesignicons.min.css" media="all" rel="stylesheet"
+type="text/css" />
 </head>
 <style type="text/css">
 #ex1Slider .slider-selection {
     background: #BABABA;
+}
+
+div.tooltip {
+    display : "none"
 }
 
 </style>
@@ -131,7 +130,7 @@ void main() {
   </script>
 
 <body onload="">
-    <div class="container">
+    <div class="navbar navbar-default navbar-fixed-bottom">
 <a>Operaci&oacute;n</a>
 <select name="operation">
   <option value="t">Trasladar</option>
@@ -153,18 +152,18 @@ void main() {
 <!--     <button id="rotar" >rotar</button>
     <button id="cancelar rotar" onclick="cancelarAnimation()" >Cancelar</button>
  -->    <span>X</span>
-<input id="ex1" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
+<input id="ex1" class="slide" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
     <span>Y</span>
-<input id="ey1" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
+<input id="ey1" class="slide" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
     <span>Z</span>
-<input id="ez1" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
+<input id="ez1" class="slide" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
 
-<button id="zoom_mas">zoommas</button>
+<button id="zoom_mas" class="mdi mdi-magnify-plus"></button>
 
-<button id="zoom_menos">zoommenos</button>
-<button id="camara_derecha">Derecha</button>
+<button id="zoom_menos" class="mdi mdi-magnify-minus"></button>
+<button id="camara_derecha" class="mdi mdi-rotate-left"></button>
 
-<button id="camara_izquierda">Izquierda</button>
+<button id="camara_izquierda" class="mdi mdi-rotate-right"></button>
 <input type="checkbox" id="animBox">Animacion de Rotacion
 </div>
 <canvas id="c">
