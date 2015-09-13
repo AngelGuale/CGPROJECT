@@ -257,10 +257,18 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         }
         break;
     case "e":
-        $('#ex1').attr("data-last", fin);
         if(value < 0)
             value = Math.abs(1/value);
-        return m4.scaling([value,1,1]);   
+        var trans = m4.scaling([1,value,1]);
+        var newRadius = objects[index].rad_size * value;
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ex1').attr("data-last", fin);
+            return trans;
+        }
+        break;
 
     };
   return figura;
@@ -298,10 +306,17 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
         return m4.rotationY(value);
         break;
     case "e":
-        $('#ey1').attr("data-last", fin);
         if(value < 0)
             value = Math.abs(1/value);
-        return m4.scaling([1,value,1]);   
+        var trans = m4.scaling([1,value,1]);
+        var newRadius = objects[index].rad_size * value;
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ey1').attr("data-last", fin);
+            return trans;
+        }        
         break;
   };
   return figura;
@@ -338,11 +353,18 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
         return m4.rotationZ(value);
         break;
     case "e":
-        $('#ez1').attr("data-last", fin);
         if(value < 0)
             value = Math.abs(1/value);
-        return m4.scaling([1,1,value]);
-        
+        var trans = m4.scaling([1,1,value]);
+        var newRadius = objects[index].rad_size * value;
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ez1').attr("data-last", fin);
+            console.log("new radius" + newRadius);
+            return trans;
+        }
         break;
     };
   return figura;
