@@ -39,7 +39,7 @@ function render(time) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
             gl.enable(gl.BLEND);
             gl.disable(gl.DEPTH_TEST);
-            gl.uniform1f(programInfo.alphaUniform, 3.0);
+            gl.uniform1f(programInfo.alphaUniform, 29837829.0);
         } else {
             gl.disable(gl.BLEND);
             gl.enable(gl.DEPTH_TEST);
@@ -250,6 +250,7 @@ var uniforms = {
    objects[i]={
      translation: initial_position,
      rad_pos: initial_position,
+     actual_pos:initial_position,
      rad_size: 1,
     ySpeed: rand(0.1, 0.3),
     zSpeed: rand(0.1, 0.3),
@@ -314,9 +315,7 @@ uniforms=objects[i].uniforms;
             m4.multiply(world, transf, world);
         }
                 //m4.rotateZ(world, time * obj.zSpeed, world);
-        //console.log("aqui");
-      //          console.log(i);
-        //console.log(obj.translation);
+        console.log(i + " " + obj.actual_pos[0]);
         m4.translate(world, obj.translation, world);
         //m4.rotateX(world, time, world);
         //m4.transpose(m4.inverse(world, uni.u_worldInverseTranspose), uni.u_worldInverseTranspose);
@@ -327,6 +326,7 @@ uniforms=objects[i].uniforms;
 
 function aplicarTransformacion(i, mat){
     pendingTransformation[i] = m4.multiply(pendingTransformation[i] , mat );
+  objects[i].actual_pos=m4.transformPoint(mat,objects[i].actual_pos);
 }
 
 
@@ -363,7 +363,9 @@ function aplicarTransformacion(i, mat){
      var i, j;
      for( i=2; i < 5; i++){
          if(i != index){
-             var figura = objects[i].rad_pos;
+             var figura = objects[i].actual_pos;
+             //console.log(transformed);
+             //console.log(figura);
              for(j = 0; j < 3; j++){
                  if(Math.abs(transformed[0] - figura[0]) < 2 * rad &&
                      Math.abs(transformed[1] - figura[1]) < 2 * rad &&
