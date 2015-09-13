@@ -233,10 +233,10 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         return m4.identity();
 
 
+  var pos = objects[index].rad_pos;
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
-        var pos = objects[index].rad_pos;
         var trans = m4.translation([value, 0, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size))
@@ -247,8 +247,14 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
         }
         break;
     case "r":
-        $('#ex1').attr("data-last", fin);
-        return m4.rotationX(value);
+        var trans = m4.rotationX(value);
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ex1').attr("data-last", fin);
+            return trans;
+        }
         break;
     case "e":
         $('#ex1').attr("data-last", fin);
@@ -266,10 +272,10 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
         return m4.identity();
 
 
+  var pos = objects[index].rad_pos;
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
-        var pos = objects[index].rad_pos;
         var trans = m4.translation([0, value, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size))
@@ -280,6 +286,14 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
         }
         break;
     case "r":
+        var trans = m4.rotationY(value);
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ey1').attr("data-last", fin);
+            return trans;
+        }
         $('#ey1').attr("data-last", fin);
         return m4.rotationY(value);
         break;
@@ -298,10 +312,10 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
     if(Math.abs(value) < 1)
         return m4.identity();
 
+  var pos = objects[index].rad_pos;
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
-        var pos = objects[index].rad_pos;
         var trans = m4.translation([0, 0, value]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size))
@@ -312,7 +326,15 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
         }
         break;
     case "r":
-        $('#ez1').attr("data-last", fin);
+        var trans = m4.rotationZ(value);
+        var mat = m4.multiply(pendingTransformation[index], trans);
+        if(detectCollision(mat, pos, objects[index].rad_size))
+            return m4.identity();
+        else {
+            $('#ez1').attr("data-last", fin);
+            return trans;
+        }
+        break;
         return m4.rotationZ(value);
         break;
     case "e":
