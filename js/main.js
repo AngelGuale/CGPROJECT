@@ -349,7 +349,7 @@ function aplicarTransformacion(i, mat){
  function detectCollision(mat, vec, rad, index){
      var transformed = m4.transformPoint(mat, vec);
      //colision con cilindro
-     if (Math.abs(transformed[0]) < 0.3 + rad  && Math.abs(transformed[1]) < 0.3 + rad &&
+     if (Math.abs(transformed[0]) < 0.3 + rad  &&
             Math.abs(transformed[2]) < 0.3 + rad ){
          console.log("cilindro crash");
          return true;
