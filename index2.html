@@ -259,6 +259,11 @@ function obtenerOpMatrixSelectX(inicio, fin, index){
     case "r":
         var trans = m4.rotationX(value/3);
         var mat = m4.multiply(pendingTransformation[index], trans);
+        if(isDebajoDelPlano(mat, pos, objects[index].rad_size, index)){
+           $('#ex1').attr("data-last", fin);
+            $('#ex1').attr("data-slider-value", inicio);
+            return m4.identity();
+        }
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
             $('#ex1').attr("data-last", fin);
             $('#ex1').attr("data-slider-value", inicio);
@@ -372,11 +377,13 @@ function obtenerOpMatrixSelectZ(inicio, fin, index){
     case "r":
         var trans = m4.rotationZ(value/3);
         var mat = m4.multiply(pendingTransformation[index], trans);
+        
         if(detectCollision(mat, pos, objects[index].rad_size, index)){
                $('#ez1').attr("data-last", fin);
             $('#ez1').attr("data-slider-value", inicio);
             return m4.identity();
           }
+
         else {
             $('#ez1').attr("data-last", fin);
             return trans;

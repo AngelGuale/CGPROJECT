@@ -379,3 +379,12 @@ function aplicarTransformacion(i, mat){
      
      return false;
  }
+
+ function isDebajoDelPlano(mat, vec, rad, index){
+      var transformed = m4.transformPoint(mat, vec);
+      if (Math.abs(transformed[1]) < rad+0.1){
+         console.log("plano  crash");
+         return true;
+     }
+     return false;
+ }
