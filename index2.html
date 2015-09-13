@@ -284,10 +284,11 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
 
 
   var pos = objects[index].rad_pos;
+  console.log(pos);
   op=$('select[name="operation"]').val()
   switch(op){
     case "t":
-        if(fin>0){
+        if(pos[1]>-0.5){
         var trans = m4.translation([0, value, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
         if(detectCollision(mat, pos, objects[index].rad_size, index))
@@ -380,7 +381,7 @@ $('select[name="textura"]').on("change",function(){
 
   figura=$('select[name="figura"]').val()
   text_src=$(this).val();
-  console.log(texturas[figura]);
+  //console.log(texturas[figura]);
    text = twgl.createTexture(gl, {
       min: gl.NEAREST,
       mag: gl.NEAREST,
@@ -412,7 +413,7 @@ $('#zoom_menos').click(function(){
    mat=m4.translation(scal_vec);
   m4.transformPoint(mat, eye, eye);
   
- console.log(eye); 
+  
 });
 
 
@@ -420,7 +421,6 @@ $('#camara_derecha').click(function(){
   mat=m4.rotationY(-0.1);
   m4.transformPoint(mat, eye, eye);
   
- console.log(eye); 
 });
 
 $('#camara_izquierda').click(function(){
