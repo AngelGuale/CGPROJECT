@@ -154,7 +154,7 @@ void main() {
  -->    <span>X</span>
 <input id="ex1" class="slide" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
     <span>Y</span>
-<input id="ey1" class="slide" data-slider-id='ex1Slider' type="text" data-last="-5" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="-5"/>
+<input id="ey1" class="slide" data-slider-id='ex1Slider' type="text" data-last="-2" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="-1"/>
     <span>Z</span>
 <input id="ez1" class="slide" data-slider-id='ex1Slider' type="text" data-last="0" data-slider-min="-5" data-slider-max="5" data-slider-step="0.5" data-slider-value="1"/>
 
@@ -313,6 +313,11 @@ function obtenerOpMatrixSelectY(inicio, fin, index){
     case "t":
         var trans = m4.translation([0, value, 0]);
         var mat = m4.multiply(pendingTransformation[index], trans);
+          if(isDebajoDelPlano(mat, pos, objects[index].rad_size, index)){
+           $('#ey1').attr("data-last", fin);
+            $('#ey1').attr("data-slider-value", inicio);
+            return m4.identity();
+        }
          if(detectCollision(mat, pos, objects[index].rad_size, index)){
           $('#ey1').attr("data-last", fin);
             $('#ey1').attr("data-slider-value", inicio);
