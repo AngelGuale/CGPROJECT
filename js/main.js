@@ -115,7 +115,7 @@ function iniciar(){
     positions[0]=[0,0,0];//plano
     positions[1]=[0,0,0];//cilindro
     positions[2]=[5,1,-2];//cubo
-    positions[3]=[-2,1,-4];//esfera
+    positions[3]=[-2,3.5,-4];//esfera
     positions[4]=[2,0.5,2];//torus
 
        texturas[0] = twgl.createTexture(gl, {
